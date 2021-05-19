@@ -1,0 +1,122 @@
+<html>
+   <meta charset='utf-8'>
+   <head>
+      <title>Perception Image Generation</title>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="css/mdb.min.css">
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+   <style>
+      a, figure {
+         display: inline-block;
+      }
+      figcaption {
+         margin: 10px 0 0 0;
+         font-variant: small-caps;
+         font-family: Arial;
+         font-weight: bold;
+         color: black;
+      }
+      figure {
+         padding: 5px;
+      }
+   </style>
+   </head>
+   <body>
+      <!-- Page Content -->
+      <div class="container">
+         <!-- Portfolio Item Heading -->
+         <div class="col-12 justify-content-center align-items-center">
+            <h1 class="my-4 text-center">Hypnogram <small>Study Images</small>
+            </h1>
+            <form class="form-inline justify-content-center align-items-center">
+               <div class="form-group mb-2">
+                  <label for="sort" class="control-label"> Image dimensions</label>
+               </div>
+               <div class="form-group mx-sm-3 mb-2">
+                  <select id="imageSize" class="form-control">
+                     <option selected value="default">Select dimension</option>
+                     <option value="square">Square</option>
+                     <option value="wide">Wide</option>
+                     <option value="tall">Tall</option>
+                  </select>
+               </div>
+               <button type="submit" id="chart_generator" value="Submit" class="btn btn-primary mb-2">Generate</button>
+            </form>
+         </div>
+
+         <div class="row col-12">
+            <div class="col-4">
+                 <strong>T1:</strong> Did you wake up more than or equal to 4 times?</br>
+                 <strong>T2:</strong> Did you have more than or equal to 4 transitions from REM to light sleep?</br>
+                 <strong>T3:</strong> Did you spend more time in REM than in Deep sleep?</br>
+                 <strong>L -></strong> YES ------ <strong>R -></strong> NO
+             </div>
+            <div class="col-1">
+               <div id="svg" style="visibility: hidden;">
+                  <svg class="chart" id="chartID">
+                     <rect width="100%" height="100%" fill="black"/>
+                  </svg>
+               </div>
+            </div>
+            <div class="col-3">
+               <canvas id="canvas" class="canvasFrame"></canvas>
+            </div>
+            <div class="col-3">
+               <!-- Right Card content -->
+               <div class="card invisible" id="card_main">
+                  <div class="card-body">
+                     <div class="col-12" id="card_generation"></div>
+                     <div class="progress md-progress" id="progress_bar">
+                        <div class="progress-bar" id="card_progress_bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"> </div>
+                     </div>
+                     <div class="collapse-content col-12">
+                        <button id="btn_download_card" type="submit" class="btn btn-primary col-12">Download All</button><i class="fa fa-thumbs-up text-info invisible" id="card_result">  Done!</i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- <div style="margin-top: 60px;"></div> -->
+         <!-- Images generate here -->
+         <div class="row">
+            <div id="canvas_images" class="row"></div>
+         </div>
+         <!-- Images generation end -->
+         <div class="row invisible"  id="btn_download_main_div">
+            <div class="col"></div>
+            <div class="col">
+               <button id="btn_download_main" type="submit" class="btn btn-primary">Download All</button>
+            </div>
+            <div class="col"> </div>
+         </div>
+         <p class="hide" id="result"></p>
+         <p class="hide" id="photoCount_card"></p>
+      </div>
+      <!-- SCRIPTS -->
+      <script src="plugin/d3.v3.min.js"></script>
+      <!-- JQuery -->
+      <script type="text/javascript" src="plugin/jquery-3.4.1.min.js"></script>
+      <!-- Bootstrap tooltips -->
+      <script type="text/javascript" src="plugin/popper.min.js"></script>
+      <!-- Bootstrap core JavaScript -->
+      <script type="text/javascript" src="plugin/bootstrap.min.js"></script>
+      <!-- Material Design Bootstrap core JavaScript -->
+      <script type="text/javascript" src="plugin/mdb.min.js"></script>
+      <!-- Zip maker -->
+      <script type="text/javascript" src="plugin/jszip.min.js"></script>
+      <script type="text/javascript" src="plugin/jszip-utils.min.js"></script>
+      <script type="text/javascript" src="plugin/FileSaver.min.js"></script>
+      <!-- Zip maker end-->
+      <!-- Core -->
+      <script type="text/javascript" src="js/cardGeneration.js"></script>
+      <script type="text/javascript" src="js/gallery.js"></script>
+      <script type="text/javascript" src="js/download.js"></script>
+      <script type="text/javascript" src="js/main.js"></script>
+   </body>
+   <script type="text/javascript">
+   
+      
+   </script>
+</html>
