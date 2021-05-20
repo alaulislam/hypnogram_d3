@@ -4,6 +4,7 @@ var imageSize;
 var squareChartGenerator = function (image_dimension) {
 	var maxNBDataFile = 119;
 	var count = 0;
+	var textFontSize= 16;
 	imageSize = image_dimension;
 
 	$("#canvas_images").empty();
@@ -23,7 +24,7 @@ var squareChartGenerator = function (image_dimension) {
 	function generateHypnogram(datafile, imageSize) {
 
 		var margin = {
-				left: 52,
+				left: 55,
 				right: 28,
 				top: 50,
 				bottom: 40
@@ -32,19 +33,12 @@ var squareChartGenerator = function (image_dimension) {
 			height = (320 - margin.top - margin.bottom); // 262.5
 
 		var chartLabeling = {
-			headerFontSize: 16,
-			header_X: 45,
+			header_X: 35,
 			header_Y: -25,
 			left_AxisLine_X1: 0,
-			left_AxisLine_Y1: 0,
+			left_AxisLine_Y1: -1,
 			left_AxisLine_X2: 0,
 			left_AxisLine_Y2: 211,
-			left_AxisLine_text_FontSize: 16,
-			left_AxisLine_text_X: 20,
-			left_AxisLine_text_Y: 300,
-			right_AxisLine_text_FontSize: 16,
-			right_AxisLine_text_X: 260,
-			right_AxisLine_text_Y: 300,
 		};
 
 		var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
@@ -54,7 +48,9 @@ var squareChartGenerator = function (image_dimension) {
 			.attr("width", 320)
 			.attr("height", 320)
 			.append('g').attr('transform', 'translate(' + [margin.left, margin.top] + ')');
-		// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+		var svg = d3.select("svg")
+			svg.append('text')
 
 		d3.csv(datafile, function (error, data) {
 
@@ -191,9 +187,10 @@ var squareChartGenerator = function (image_dimension) {
 				// style="fill: #000000; stroke: none; font-size: 48px;"
 				// g.selectAll("line").style("stroke", "white");
 				// g.selectAll("path").style("stroke", "white");
-				g.selectAll("text").style("stroke", "none");
+			    // g.selectAll("text").style("stroke", "none");
 				g.selectAll("text").style("fill", "white");
-				g.selectAll("text").style("font-size", "15px");
+				g.selectAll("text").style("font-size", textFontSize+'px');
+				// g.selectAll("text").style("font-weight", "bold");
 				g.selectAll("text").style("font-family", "Arial");
 			}
 
@@ -236,9 +233,9 @@ var squareChartGenerator = function (image_dimension) {
 						this.setAttribute('stroke', 'gray');
 					}
 				});
-				g.selectAll("text").style("stroke", "none");
+				// g.selectAll("text").style("stroke", "none");
 				g.selectAll("text").style("fill", "white");
-				g.selectAll("text").style("font-size", "15px");
+				g.selectAll("text").style("font-size", textFontSize+'px');
 				g.selectAll("text").style("font-family", "Arial");
 
 			}
@@ -285,24 +282,61 @@ var squareChartGenerator = function (image_dimension) {
 			.attr("xmlns", "http://www.w3.org/2000/svg")
 			.node().parentNode.innerHTML;
 
+		// var svgString = getSVGString(d3.select("svg").node());
+
 		//console.log(html);
+		// var imgsrc = 'data:image/svg+xml;base64,'+ btoa( unescape( encodeURIComponent( svgString ) ) ); // Convert SVG string to data URL
 		var imgsrc = 'data:image/svg+xml;base64,' + btoa(html);
 		var img = '<img src="' + imgsrc + '">';
-		//d3.select("#svgdataurl").html(img);
 
+		function createCanvas(width, height, set2dTransform = true) {
+			// const ratio = Math.ceil(window.devicePixelRatio);
+			const ratio = 1;
+			const canvas = document.createElement('canvas');
+			canvas.width = width * ratio;
+			canvas.height = height * ratio;
+			canvas.style.width = `${width}px`;
+			canvas.style.height = `${height}px`;
+			if (set2dTransform) {
+			  canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+			}
+			return canvas;
+		  }
+		  
+		  var canvas = createCanvas(320,320,true),
+		  context = canvas.getContext("2d");
 
-		var canvas = document.getElementById("canvas"),
-			context = canvas.getContext("2d");
+		// function setupCanvas(canvas) {
+		// 	// Get the device pixel ratio, falling back to 1.
+		// 	var dpr = window.devicePixelRatio || 1;
+		// 	// Get the size of the canvas in CSS pixels.
+		// 	var rect = canvas.getBoundingClientRect();
+		// 	// Give the canvas pixel dimensions of their CSS
+		// 	// size * the device pixel ratio.
+		// 	canvas.width = rect.width * dpr;
+		// 	canvas.height = rect.height * dpr;
+		// 	var ctx = canvas.getContext('2d');
+		// 	// Scale all drawing operations by the dpr, so you
+		// 	// don't have to worry about the difference.
+		// 	ctx.scale(dpr, dpr);
+		// 	return ctx;
+		//   }
+
+		//   var context = setupCanvas(document.getElementById("canvas"));
+
+		// var canvas = document.getElementById("canvas"),
+		// 		context = canvas.getContext("2d");
+				
+		
+
+		context.imageSmoothingEnabled = false;
 
 		var image = new Image;
 		image.src = imgsrc;
 		image.onload = function () {
-			context.drawImage(image, 0, 0);
-
+			
+		    context.drawImage(image, 0, 0);
 			var canvasdata = canvas.toDataURL("image/png");
-
-			var pngimg = '<img src="' + canvasdata + '">';
-			//d3.select("#pngdataurl").html(pngimg);
 
 			var a = document.createElement("a");
 			a.download = name + ".png";
@@ -313,13 +347,84 @@ var squareChartGenerator = function (image_dimension) {
 		};
 
 	}
+	function scaleIt(source,scaleFactor){
+		var c=document.createElement('canvas');
+		var ctx=c.getContext('2d');
+		var w=source.width*scaleFactor;
+		var h=source.height*scaleFactor;
+		c.width=w;
+		c.height=h;
+		ctx.drawImage(source,0,0,w,h);
+		return(c);
+	  }
+
+	function sharpen(ctx, w, h, mix) {
+		var x, sx, sy, r, g, b, a, dstOff, srcOff, wt, cx, cy, scy, scx,
+			weights = [0, -1, 0, -1, 5, -1, 0, -1, 0],
+			katet = Math.round(Math.sqrt(weights.length)),
+			half = (katet * 0.5) | 0,
+			dstData = ctx.createImageData(w, h),
+			dstBuff = dstData.data,
+			srcBuff = ctx.getImageData(0, 0, w, h).data,
+			y = h;
+	
+		while (y--) {
+			x = w;
+			while (x--) {
+				sy = y;
+				sx = x;
+				dstOff = (y * w + x) * 4;
+				r = 0;
+				g = 0;
+				b = 0;
+				a = 0;
+	
+				for (cy = 0; cy < katet; cy++) {
+					for (cx = 0; cx < katet; cx++) {
+						scy = sy + cy - half;
+						scx = sx + cx - half;
+	
+						if (scy >= 0 && scy < h && scx >= 0 && scx < w) {
+							srcOff = (scy * w + scx) * 4;
+							wt = weights[cy * katet + cx];
+	
+							r += srcBuff[srcOff] * wt;
+							g += srcBuff[srcOff + 1] * wt;
+							b += srcBuff[srcOff + 2] * wt;
+							a += srcBuff[srcOff + 3] * wt;
+						}
+					}
+				}
+	
+				dstBuff[dstOff] = r * mix + srcBuff[dstOff] * (1 - mix);
+				dstBuff[dstOff + 1] = g * mix + srcBuff[dstOff + 1] * (1 - mix);
+				dstBuff[dstOff + 2] = b * mix + srcBuff[dstOff + 2] * (1 - mix);
+				dstBuff[dstOff + 3] = srcBuff[dstOff + 3];
+			}
+		}
+	
+		ctx.putImageData(dstData, 0, 0);
+	}
+
+	// function resizeTo(canvas,pct){
+	// 	var cw=canvas.width;
+	// 	var ch=canvas.height;
+	// 	tempCanvas.width=cw;
+	// 	tempCanvas.height=ch;
+	// 	tctx.drawImage(canvas,0,0);
+	// 	canvas.width*=pct;
+	// 	canvas.height*=pct;
+	// 	var ctx=canvas.getContext('2d');
+	// 	ctx.drawImage(tempCanvas,0,0,cw,ch,0,0,cw*pct,ch*pct);
+	//   }
+
 
 	function barChartLabeling(chart, chartLabeling) {
 
 		chart.append("text")
 			.attr("x", chartLabeling.header_X)
 			.attr("y", chartLabeling.header_Y)
-			.style("font-size", "15px")
+			.style("font-size", textFontSize+'px')
 			.style("font-family", "Arial")
 			// .attr("font-size", chartLabeling.headerFontSize+"px")
 			.style('fill', 'white')

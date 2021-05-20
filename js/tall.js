@@ -4,6 +4,7 @@ var imageSize;
 var tallChartGenerator = function (image_dimension) {
 	var maxNBDataFile = 119;
 	var count = 0;
+	var textFontSize= 16;
 	imageSize = image_dimension;
 
 	$("#canvas_images").empty();
@@ -24,24 +25,21 @@ var tallChartGenerator = function (image_dimension) {
 
 		var margin = {
 				left: 50,
-				right: 28,
+				right: 18,
 				top: 50,
 				bottom: 40
 			},
-			width = (170 - margin.left - margin.right), // 225
+			width = (160 - margin.left - margin.right), // 225
 			height = (320 - margin.top - margin.bottom); // 262.5
 
 		var chartLabeling = {
-			headerFontSize: 16,
-			header_X: -40,
+			header_X: -45,
 			header_Y: -25,
 			left_AxisLine_X1: 0,
-			left_AxisLine_Y1: 0,
+			left_AxisLine_Y1: -1,
 			left_AxisLine_X2: 0,
 			left_AxisLine_Y2: 211,
-			left_AxisLine_text_FontSize: 16,
-			left_AxisLine_text_X: 20,
-			left_AxisLine_text_Y: 300,
+
 		};
 
 		var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
@@ -188,7 +186,7 @@ var tallChartGenerator = function (image_dimension) {
 				g.select(".domain").remove();
 				g.selectAll("text").style("stroke", "none");
 				g.selectAll("text").style("fill", "white");
-				g.selectAll("text").style("font-size", "15px");
+				g.selectAll("text").style("font-size", textFontSize+'px');
 				g.selectAll("text").style("font-family", "Arial");
 			}
 
@@ -233,7 +231,7 @@ var tallChartGenerator = function (image_dimension) {
 				});
 				g.selectAll("text").style("stroke", "none");
 				g.selectAll("text").style("fill", "white");
-				g.selectAll("text").style("font-size", "15px");
+				g.selectAll("text").style("font-size", textFontSize+'px');
 				g.selectAll("text").style("font-family", "Arial");
 
 			}
@@ -280,14 +278,13 @@ var tallChartGenerator = function (image_dimension) {
 			.attr("xmlns", "http://www.w3.org/2000/svg")
 			.node().parentNode.innerHTML;
 
-		//console.log(html);
 		var imgsrc = 'data:image/svg+xml;base64,' + btoa(html);
-		var img = '<img src="' + imgsrc + '">';
-		//d3.select("#svgdataurl").html(img);
 
 
-		var canvas = document.getElementById("canvas"),
-			context = canvas.getContext("2d");
+		// var canvas = document.getElementById("canvas"),
+		// 	context = canvas.getContext("2d");
+		var canvas = createCanvas(160,320,true),
+		context = canvas.getContext("2d");
 
 		var image = new Image;
 		image.src = imgsrc;
@@ -295,9 +292,6 @@ var tallChartGenerator = function (image_dimension) {
 			context.drawImage(image, 0, 0);
 
 			var canvasdata = canvas.toDataURL("image/png");
-
-			var pngimg = '<img src="' + canvasdata + '">';
-			//d3.select("#pngdataurl").html(pngimg);
 
 			var a = document.createElement("a");
 			a.download = name + ".png";
@@ -309,16 +303,29 @@ var tallChartGenerator = function (image_dimension) {
 
 	}
 
+	function createCanvas(width, height, set2dTransform = true) {
+		// const ratio = Math.ceil(window.devicePixelRatio);
+		const ratio = 1;
+		const canvas = document.createElement('canvas');
+		canvas.width = width * ratio;
+		canvas.height = height * ratio;
+		canvas.style.width = `${width}px`;
+		canvas.style.height = `${height}px`;
+		if (set2dTransform) {
+		  canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+		}
+		return canvas;
+	  }
 	function barChartLabeling(chart, chartLabeling) {
 
 		chart.append("text")
-			.attr("x", chartLabeling.header_X)
-			.attr("y", chartLabeling.header_Y)
-			.style("font-size", "15px")
-			.style("font-family", "Arial")
-			// .attr("font-size", chartLabeling.headerFontSize+"px")
-			.style('fill', 'white')
-			.text("8 hours sleep phases");
+		.attr("x", chartLabeling.header_X)
+		.attr("y", chartLabeling.header_Y)
+		.style("font-size", textFontSize+'px')
+		.style("font-family", "Arial")
+		.style('fill', 'white')
+		.text("8 hours sleep phases");
+
 
 		chart.append("line")
 			.style("stroke", "white")

@@ -47,6 +47,8 @@ $('#chart_generator').click(function (event) {
 		var canvas = document.getElementsByTagName('canvas')[0];
 		canvas.width = 320;
 		canvas.height = 320;
+		// canvas.style.width = 160 + 'px';
+		// canvas.style.height = 160 + 'px';
 		squareChartGenerator(image_dimension);
 	}
 	if (image_dimension === "wide") {
@@ -77,3 +79,8 @@ $('#btn_download_main, #btn_download_card').click(function (event) {
 	event.preventDefault();
 	downloadAsZip();
 });
+// var link = document.createElement('link');
+// 		link.rel = 'stylesheet';
+// 		link.type = 'text/css';
+// 		link.href = 'http://fonts.googleapis.com/css?family=Vast+Shadow';
+// 		document.getElementsByTagName('head')[0].appendChild(link);

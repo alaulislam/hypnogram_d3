@@ -20,6 +20,15 @@
          figure {
          padding: 5px;
          }
+         canvas {
+            image-rendering: optimizeSpeed;
+            image-rendering: crisp-edges;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -o-crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            -ms-interpolation-mode: nearest-neighbor;
+         }
+
       </style>
    </head>
    <body>
@@ -45,7 +54,7 @@
             </form>
          </div>
          <div class="row col-12">
-            <div class="col-4">
+            <div class="col-7">
                <strong>T1:</strong> Did you wake up more than or equal to 4 times?</br>
                <strong>T2:</strong> Did you have more than or equal to 4 transitions from REM to light sleep?</br>
                <strong>T3:</strong> Did you spend more time in REM than in Deep sleep?</br>
@@ -58,8 +67,8 @@
                   </svg>
                </div>
             </div>
-            <div class="col-3">
-               <canvas id="canvas" class="canvasFrame"></canvas>
+            <div class="col-1">
+               <canvas id="canvas" class="canvasFrame" style="visibility: hidden;"></canvas>
             </div>
             <div class="col-3">
                <!-- Right Card content -->

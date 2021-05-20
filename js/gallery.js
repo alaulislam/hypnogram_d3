@@ -1,5 +1,4 @@
 function galleryGenerator(imgData,imgName,image_dimension,count){
-console.log(image_dimension);
     var modalID = "modal"+count;
     var modalTarget = "#modal"+count;
     var saveBtnID = "saveBtn_"+count;
@@ -62,9 +61,9 @@ console.log(image_dimension);
           
           $("#"+saveBtnID).click(function(){
             var $this = $(this);
-            var id_no = $this.attr('id').slice(-1);
-            var nameDL = $("#modalImageID_"+id_no).attr('name');
-            var hrefDL = $("#modalImageID_"+id_no).attr('data');
+            // var id_no = $this.attr('id').slice(-1);
+            var nameDL = $("#modalImageID_"+count).attr('name');
+            var hrefDL = $("#modalImageID_"+count).attr('data');
             var a = document.createElement("a");
             a.download = nameDL;
                   a.href = hrefDL;
