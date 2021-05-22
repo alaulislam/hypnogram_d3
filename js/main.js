@@ -30,6 +30,19 @@ $(function () {
 		var selectedOption = $('option:selected', this).val();
 		// alert(selectedOption);
 		// alert( $('option:selected', this).text() );
+		if (selectedOption === "square") {
+			$("script[src='js/wide.js']").remove();
+			$("script[src='js/tall.js']").remove();
+		}
+		if (selectedOption === "wide") {
+			$("script[src='js/square.js']").remove();
+			$("script[src='js/tall.js']").remove();
+		}
+		if (selectedOption === "tall") {
+			$("script[src='js/square.js']").remove();
+			$("script[src='js/wide.js']").remove();
+		}
+		
 		addImageDimensionScript(selectedOption);
 	});
 });
@@ -44,6 +57,7 @@ $('#chart_generator').click(function (event) {
 	}
 	if (image_dimension === "square") {
 		$("script[src='js/wide.js']").remove();
+		$("script[src='js/tall.js']").remove();
 		var canvas = document.getElementsByTagName('canvas')[0];
 		canvas.width = 320;
 		canvas.height = 320;
@@ -52,7 +66,8 @@ $('#chart_generator').click(function (event) {
 		squareChartGenerator(image_dimension);
 	}
 	if (image_dimension === "wide") {
-		$("script[src='js/square.js']").remove()
+		$("script[src='js/square.js']").remove();
+		$("script[src='js/tall.js']").remove();
 		var canvas = document.getElementsByTagName('canvas')[0];
 		canvas.width = 320;
 		canvas.height = 160;
@@ -61,6 +76,7 @@ $('#chart_generator').click(function (event) {
 	}
 	if (image_dimension === "tall") {
 		$("script[src='js/square.js']").remove();
+		$("script[src='js/wide.js']").remove();
 		var canvas = document.getElementsByTagName('canvas')[0];
 		canvas.width = 160;
 		canvas.height = 320;

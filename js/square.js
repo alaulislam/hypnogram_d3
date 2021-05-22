@@ -160,7 +160,7 @@ var squareChartGenerator = function (image_dimension) {
 				.append("rect")
 				// .attr("stroke", "url(#line-gradient)" )
 				.style("fill", "url(#line-gradient)")
-				.attr("stroke-width", 4.5)
+				// .attr("stroke-width", 4.5)
 				.attr("x", function (d) {
 					return xScale(d.date) - .75
 				}) // position the left of the rectangle
