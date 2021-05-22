@@ -20,9 +20,9 @@ addImageDimensionScript = function (dimension) {
 $(window).on('unload', function () {
 	// executed if the user clicks "Reload this Page"
 	$("#imageSize").val('default');
-	$("script[src='js/square.js']").remove();
-	$("script[src='js/wide.js']").remove();
-	$("script[src='js/square.js']").remove();
+	// $("script[src='js/square.js']").remove();
+	// $("script[src='js/wide.js']").remove();
+	// $("script[src='js/square.js']").remove();
 
 });
 $(function () {
@@ -30,6 +30,7 @@ $(function () {
 		var selectedOption = $('option:selected', this).val();
 		// alert(selectedOption);
 		// alert( $('option:selected', this).text() );
+
 		if (selectedOption === "square") {
 			$("script[src='js/wide.js']").remove();
 			$("script[src='js/tall.js']").remove();
@@ -50,38 +51,42 @@ $(function () {
 $('#chart_generator').click(function (event) {
 	event.preventDefault();
 	resetMessage();
+	var imageArraySquare = [];
+	var imageArrayWide = [];
+	var imageArrayTall = [];
+	var imageSize;
 	var image_dimension = $("#imageSize option:selected")[0].getAttribute("value");
 	if (image_dimension === "default") {
 		showError("Please select hypnogram dimensions from the Drop-Down");
 		return;
 	}
 	if (image_dimension === "square") {
-		$("script[src='js/wide.js']").remove();
-		$("script[src='js/tall.js']").remove();
+		// $("script[src='js/wide.js']").remove();
+		// $("script[src='js/tall.js']").remove();
 		var canvas = document.getElementsByTagName('canvas')[0];
 		canvas.width = 320;
 		canvas.height = 320;
 		// canvas.style.width = 160 + 'px';
 		// canvas.style.height = 160 + 'px';
-		squareChartGenerator(image_dimension);
+		 squareChartGenerator(image_dimension,imageArraySquare);
 	}
 	if (image_dimension === "wide") {
-		$("script[src='js/square.js']").remove();
-		$("script[src='js/tall.js']").remove();
+		// $("script[src='js/square.js']").remove();
+		// $("script[src='js/tall.js']").remove();
 		var canvas = document.getElementsByTagName('canvas')[0];
 		canvas.width = 320;
 		canvas.height = 160;
 
-		wideChartGenerator(image_dimension);
+		wideChartGenerator(image_dimension,imageArrayWide);
 	}
 	if (image_dimension === "tall") {
-		$("script[src='js/square.js']").remove();
-		$("script[src='js/wide.js']").remove();
+		// $("script[src='js/square.js']").remove();
+		// $("script[src='js/wide.js']").remove();
 		var canvas = document.getElementsByTagName('canvas')[0];
 		canvas.width = 160;
 		canvas.height = 320;
 
-		tallChartGenerator(image_dimension);
+		tallChartGenerator(image_dimension, imageArrayTall);
 	}
 
 	$('#btn_download_main_div').removeClass('invisible').addClass('visible');

@@ -1,7 +1,5 @@
-var imageArray = [];
 
-var imageSize;
-var squareChartGenerator = function (image_dimension) {
+var squareChartGenerator = function (image_dimension,imageArraySquare) {
 	var maxNBDataFile = 119;
 	var count = 0;
 	var textFontSize= 16;
@@ -343,7 +341,7 @@ var squareChartGenerator = function (image_dimension) {
 			a.href = canvasdata;
 			//a.click();
 			galleryGenerator(canvasdata, a.download, imageSize, count);
-			imageArray.push(a);
+			imageArraySquare.push(a);
 		};
 
 	}
